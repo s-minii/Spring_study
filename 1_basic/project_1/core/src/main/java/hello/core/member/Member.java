@@ -1,3 +1,4 @@
+// 회원 정보 클래스
 package hello.core.member;
 
 public class Member {
