@@ -1,6 +1,8 @@
 package hello.core.member;
 
+import hello.core.AppConfig;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -9,7 +11,14 @@ import org.junit.jupiter.api.Test;
 public class MemberServiceTest {
 
     //객체 생성
-    MemberService memberService = new MemberServiceimpl();
+    MemberService memberService;
+
+    // BeforeEach : 각 테스트 실행 전에 실행되게 한다.
+    @BeforeEach
+    public void beforeEach(){
+        AppConfig appConfig = new AppConfig();
+        memberService = appConfig.memberService();
+    }
 
     @Test
     // 회원가입에 대한 테스트 코드
