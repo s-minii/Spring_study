@@ -28,10 +28,10 @@ public class AutoAppConfig {
     // MemoryMemberRepository 수동 빈 등록 테스트 (원래는 우선 순위 : 수동 빈 > 자동 빈)
     // 그런데, 최근 스프링 부트에서는 오류가 나게 바뀜!!
     // (우선 순위를 가지는 애매한 상황을 만들지 않고, 스프링 내에서 오류를 발생시켜서 애매한 상황 자체를 만들지 않음)
-    @Bean(name = "memoryMemberRepository")
-    MemberRepository memberRepository(){
-        return new MemoryMemberRepository();
-    }
+//    @Bean(name = "memoryMemberRepository")
+//    MemberRepository memberRepository(){
+//        return new MemoryMemberRepository();
+//    }
 
 
 }
