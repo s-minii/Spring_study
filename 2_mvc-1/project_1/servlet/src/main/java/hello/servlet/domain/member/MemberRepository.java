@@ -16,7 +16,7 @@ public class MemberRepository {
 
     private static final MemberRepository instance = new MemberRepository(); // 싱글톤
 
-    public static MemberRepository getInstance(){
+    public static MemberRepository getInstance(){ // getInstance()를 통해서 값을 가져옴 (싱글톤)
         return instance;
     }
     private MemberRepository(){ // private로 지정하여 싱글톤
