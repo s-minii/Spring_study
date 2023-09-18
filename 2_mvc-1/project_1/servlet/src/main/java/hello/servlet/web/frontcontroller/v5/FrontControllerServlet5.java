@@ -49,6 +49,31 @@ public class FrontControllerServlet5  extends HttpServlet {
     }
 
     @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPut(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
+    }
+
+    @Override
+    protected void doHead(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doHead(req, resp);
+    }
+
+    @Override
+    protected long getLastModified(HttpServletRequest req) {
+        return super.getLastModified(req);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
+    }
+
+    @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Object handler = getHandler(request); // 1. 핸들러 조회 (핸들러 매핑 정보)
