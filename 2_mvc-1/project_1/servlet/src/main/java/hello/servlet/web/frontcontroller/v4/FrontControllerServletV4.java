@@ -1,8 +1,11 @@
-package hello.servlet.web.frontcontroller.v3.controller;
+package hello.servlet.web.frontcontroller.v4;
 
 import hello.servlet.web.frontcontroller.ModelView;
 import hello.servlet.web.frontcontroller.MyView;
 import hello.servlet.web.frontcontroller.v3.ControllerV3;
+import hello.servlet.web.frontcontroller.v4.controller.MemberFormControllerV4;
+import hello.servlet.web.frontcontroller.v4.controller.MemberListControllerV4;
+import hello.servlet.web.frontcontroller.v4.controller.MemberSaveControllerV4;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,37 +16,35 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "FrontControllerServletV3", urlPatterns = "/front-controller/v3/*") // V1 하위에 어떤 것들이 들어오더라도 우선 호출
-public class FrontControllerServletV3 extends HttpServlet {
+@WebServlet(name = "FrontControllerServletV4", urlPatterns = "/front-controller/v4/*") // V1 하위에 어떤 것들이 들어오더라도 우선 호출
+public class FrontControllerServletV4 extends HttpServlet {
 
-    private Map<String, ControllerV3> controllerMap = new HashMap<>();
+    private Map<String, ControllerV4> controllerMap = new HashMap<>();
     // 어떤 컨트롤러가 오는지 찾아서, 그 컨트롤러로 지정
 
-    public FrontControllerServletV3() {
-        controllerMap.put("/front-controller/v3/members/new-form", new MemberFormControllerV3()); // new-form으로 지정, formController로 이동
-        controllerMap.put("/front-controller/v3/members/save", new MemberSaveControllerV3()); // save로 지정, saveController로 이동
-        controllerMap.put("/front-controller/v3/members", new MemberListControllerV3()); // members로 지정, ListController로 이동
+    public FrontControllerServletV4() {
+        controllerMap.put("/front-controller/v4/members/new-form", new MemberFormControllerV4()); // new-form으로 지정, formController로 이동
+        controllerMap.put("/front-controller/v4/members/save", new MemberSaveControllerV4()); // save로 지정, saveController로 이동
+        controllerMap.put("/front-controller/v4/members", new MemberListControllerV4()); // members로 지정, ListController로 이동
     }
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestURI = request.getRequestURI();
 
-        ControllerV3 controller = controllerMap.get(requestURI);
+        ControllerV4 controller = controllerMap.get(requestURI);
         if (controller == null){
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
-        // paramMap
-
         Map<String, String> paramMap = createParamMap(request);
-        ModelView mv = controller.process(paramMap);
+        Map<String, Object> model = new HashMap<>(); // 추가
 
-        String viewName = mv.getViewName();
+        String viewName = controller.process(paramMap, model);
+
         MyView view = viewResolver(viewName);
-
-        view.render(mv.getModel(), request, response);
+        view.render(model, request, response);
     }
 
     private static MyView viewResolver(String viewName) {
