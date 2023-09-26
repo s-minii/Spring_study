@@ -93,7 +93,7 @@ public class BasicItemController {
     }
 
     // 보통 이 정도로 사용하면 된다!
-    @PostMapping("/add")
+    //@PostMapping("/add")
     public String addItemV3(@ModelAttribute("item") Item item){
         itemRepository.save(item);
 
@@ -108,5 +108,10 @@ public class BasicItemController {
         return "basic/item";
     }
 
-
+    // Redirect 버전 (상품 등록 후, 새로고침 눌렀을 때 같은 상품이 지속적으로 등록되는 것을 방지)
+    @PostMapping("/add")
+    public String addItemV5(Item item){
+        itemRepository.save(item);
+        return "redirect:/basic/items/" + item.getId();
+    }
 }
