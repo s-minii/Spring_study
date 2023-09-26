@@ -116,7 +116,7 @@ public class BasicItemController {
     }
 
     // Redirect 버전 (상품 등록 후, 새로고침 눌렀을 때 같은 상품이 지속적으로 등록되는 것을 방지)
-    // 추가로
+    // 추가로 등록시, redirectAttributes 를 사용하여'저장 완료' 라는 문구 추가
     @PostMapping("/add")
     public String addItemV6(Item item, RedirectAttributes redirectAttributes){
         Item savedItem = itemRepository.save(item);
