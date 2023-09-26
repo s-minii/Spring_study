@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class BasicItemController {
 
 
     // 상품 등록 폼 -> 상품 등록 클릭 시
- //   @PostMapping("/add")
+    // @PostMapping("/add")
     public String addItemV1(@RequestParam String itemName,
                        @RequestParam int price,
                        @RequestParam Integer quantity,
@@ -83,7 +83,7 @@ public class BasicItemController {
         return "basic/item";
     }
 
-//    @PostMapping("/add")
+    // @PostMapping("/add")
     public String addItemV2(@ModelAttribute("item") Item item, Model model){
 
         itemRepository.save(item);
@@ -93,7 +93,7 @@ public class BasicItemController {
     }
 
     // 보통 이 정도로 사용하면 된다!
-    //@PostMapping("/add")
+    // @PostMapping("/add")
     public String addItemV3(@ModelAttribute("item") Item item){
         itemRepository.save(item);
 
@@ -101,7 +101,7 @@ public class BasicItemController {
     }
 
 
-//    @PostMapping("/add")
+    //@PostMapping("/add")
     public String addItemV4(Item item){
         itemRepository.save(item);
 
@@ -109,9 +109,19 @@ public class BasicItemController {
     }
 
     // Redirect 버전 (상품 등록 후, 새로고침 눌렀을 때 같은 상품이 지속적으로 등록되는 것을 방지)
-    @PostMapping("/add")
+    // @PostMapping("/add")
     public String addItemV5(Item item){
         itemRepository.save(item);
         return "redirect:/basic/items/" + item.getId();
+    }
+
+    // Redirect 버전 (상품 등록 후, 새로고침 눌렀을 때 같은 상품이 지속적으로 등록되는 것을 방지)
+    // 추가로
+    @PostMapping("/add")
+    public String addItemV6(Item item, RedirectAttributes redirectAttributes){
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/basic/items/{itemId}";
     }
 }
