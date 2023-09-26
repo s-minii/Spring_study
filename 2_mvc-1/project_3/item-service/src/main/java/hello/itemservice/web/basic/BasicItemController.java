@@ -16,6 +16,7 @@ public class BasicItemController {
 
     private final ItemRepository itemRepository;
 
+    // 상품 목록
     @GetMapping
     public String items(Model model){
         List<Item> items = itemRepository.findAll();
@@ -33,6 +34,7 @@ public class BasicItemController {
         itemRepository.save(new Item("itemB", 20000, 20));
     }
 
+    // 상품 세부 내용
     @GetMapping("/{itemId}")
     public String item(@PathVariable long itemId, Model model){
         Item item = itemRepository.findById(itemId);
@@ -40,11 +42,29 @@ public class BasicItemController {
         return "basic/item";
     }
 
+    // 상품 등록 폼 연결
     @GetMapping("/add")
     public String addForm(){
         return "basic/addForm";
     }
 
+    // 등록 수정 폼 연결
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable Long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "basic/editForm";
+    }
+
+    // 상품 수정 후, 저장 버튼을 눌렀을 때 리다이렉트처리
+    @PostMapping("/{itemId}/edit")
+    public String edit(@PathVariable Long itemId, @ModelAttribute Item item){
+        itemRepository.update(itemId, item);
+        return "redirect:/basic/items/{itemId}";
+    }
+
+
+    // 상품 등록 폼 -> 상품 등록 클릭 시
  //   @PostMapping("/add")
     public String addItemV1(@RequestParam String itemName,
                        @RequestParam int price,
