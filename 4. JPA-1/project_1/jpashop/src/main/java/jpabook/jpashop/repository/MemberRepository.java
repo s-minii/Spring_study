@@ -11,7 +11,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberRepository {
 
-    private EntityManager em;
+    //@RequiredArgsConstructor를 사용했을 시, final을 꼭 붙여야함. 아니면 nullPoint 오류!
+    private final EntityManager em;
 
     public void save(Member member){
         em.persist(member);
