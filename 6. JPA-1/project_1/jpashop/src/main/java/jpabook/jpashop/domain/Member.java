@@ -18,7 +18,7 @@ public class Member {
 
     private String name;
 
-    @Embedded // 내장했다
+    @Embedded
     private Address address;
 
     @OneToMany(mappedBy = "member")
