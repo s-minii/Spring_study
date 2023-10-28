@@ -29,10 +29,16 @@ public class Category {
 
 
     // 부모 자식 연관관계
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
+
+    // 연관관계 메서드 : 앙뱡향 연관관계일 때 편의를 위해 사용
+    public void addChildCategory(Category child){
+        this.child.add(child);
+        child.setParent(this);
+    }
 }
