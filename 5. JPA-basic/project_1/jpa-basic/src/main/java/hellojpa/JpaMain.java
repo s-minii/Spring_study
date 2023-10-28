@@ -1,5 +1,4 @@
 package hellojpa;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -17,23 +16,16 @@ public class JpaMain {
         tx.begin();
 
         try{
-//            Member findMember = em.find(Member.class, 1L); // 멤버 찾기
-//            System.out.println("findMember.getId() = " + findMember.getId());
-//            System.out.println("findMember.getName() = " + findMember.getName());
-//
-//            findMember.setName("helloJPA"); // 회원 수정
-//            em.remove(findMember); // 회원 삭제
 
-            // JPQL : 엔터티 객체를 대상으로 쿼리
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
+            // 비영속
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HellsoJPA");
 
-            for (Member member : result){
-                System.out.println("member.name =" + member.getName());
-            }
-
+            //영속 (이때는 쿼리 안 나감)
+            em.persist(member);
+            
+            // commit하는 시점에 쿼리가 실행
             tx.commit();
         } catch (Exception e){
             em.close();
