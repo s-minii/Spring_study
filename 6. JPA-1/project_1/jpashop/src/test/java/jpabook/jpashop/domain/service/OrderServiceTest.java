@@ -19,7 +19,6 @@ import javax.persistence.EntityManager;
 
 import static com.jayway.jsonpath.internal.path.PathCompiler.fail;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
