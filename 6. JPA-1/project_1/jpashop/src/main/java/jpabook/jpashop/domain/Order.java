@@ -90,7 +90,7 @@ public class Order {
     public int getTotalPrice(){
         int totalPrice = 0;
         for (OrderItem orderItem : orderItems) {
-            totalPrice += getTotalPrice();
+            totalPrice += orderItem.getTotalPrice();
         }
         return totalPrice;
     }
